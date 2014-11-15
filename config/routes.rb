@@ -11,7 +11,7 @@ Myflix::Application.routes.draw do
   get '/following', to: 'users#following'
   
   namespace :admin do
-    resources :videos, only: [:new]
+    resources :videos, only: [:new, :create]
   end
 
   resources :videos, only: [:show, :index] do

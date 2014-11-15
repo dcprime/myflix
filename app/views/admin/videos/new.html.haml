@@ -2,7 +2,7 @@
   .container
     .row
       .col-md-10.col-md-offset-1
-        %form.form-horizontal
+        = bootstrap_form_for([:admin, @video], layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-6") do |f|
           %ul.nav.nav-tabs
             %li
               %a(href="/ui/admin_views_payments") Recent Payments
@@ -10,18 +10,12 @@
               %a(href="") Add a New Video
           %br
           %fieldset
+            = f.text_field :title, class: "col-sm-3"
             .form-group
-              %label.control-label.col-sm-3 Title
-              .col-sm-3
-                %input.form-control(type="text")
-            .form-group
-              %label.control-label.col-sm-3 Category
+              = label_tag "category_id", "Category", class: "control-label col-sm-3"
               .col-sm-6
-                %select.form-control
-            .form-group
-              %label.control-label.col-sm-3 Description
-              .col-sm-6
-                %textarea.form-control(rows="8")
+                = select_tag "category_id", options_for_select(Category.all.map {|category| [category.name, category.id]}), class: "form-control"
+            = f.text_area :description, rows: 8, class: "col-sm-6"
             .form-group
               %label.control-label.col-sm-3 Large Cover
               .col-sm-6
