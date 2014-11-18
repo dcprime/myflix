@@ -5,6 +5,7 @@ class Video < ActiveRecord::Base
   has_many :reviews
   
   validates_presence_of :title, :description
+  validates_uniqueness_of :title
   
   mount_uploader :small_cover, SmallCoverUploader
   mount_uploader :large_cover, LargeCoverUploader
