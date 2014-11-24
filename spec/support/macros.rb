@@ -35,3 +35,16 @@ end
 def click_on_video_on_home_page(video)
   find("a[href='/videos/#{video.id}']").click
 end
+
+def get_stripe_token_id
+  Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
+  @token ||= Stripe::Token.create(
+    :card => {
+    :number => "4242424242424242",
+    :exp_month => 11,
+    :exp_year => 2016,
+    :cvc => "123"
+    }
+  )
+  @token.id
+end

@@ -15,22 +15,22 @@ describe UsersController do
       after { ActionMailer::Base.deliveries.clear }
       
       it "sends out the email to the user with valid inputs" do
-        post :create, user: { email: "dcprime@gmail.com", password: "password", full_name: "Dave Conley" }
-        expect(ActionMailer::Base.deliveries.last.to).to eq(["dcprime@gmail.com"])
+        post :create, { stripeToken: get_stripe_token_id, user: { email: "example@example.com", password: "password", full_name: "Dave Conley" } }
+        expect(ActionMailer::Base.deliveries.last.to).to eq(["example@example.com"])
       end
       it "sends the email containing the user's name with valid inputs" do
-        post :create, user: { email: "dcprime@gmail.com", password: "password", full_name: "Dave Conley" }
+        post :create, { stripeToken: get_stripe_token_id, user: { email: "example@example.com", password: "password", full_name: "Dave Conley" } }
         expect(ActionMailer::Base.deliveries.last).to have_content("Dave Conley")
       end
       it "does not send the email with invalid inputs" do 
-        post :create, user: { email: "dcprime@gmail.com", full_name: "Dave Conley" }
+        post :create, user: { email: "example@example.com", full_name: "Dave Conley" }
         expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
     
     context "with valid input" do
       before do
-        post :create, user: Fabricate.attributes_for(:user)
+        post :create, { stripeToken: get_stripe_token_id, user: { email: "example@example.com", password: "password", full_name: "Dave Conley" } }
       end
       it "creates the user" do
         expect(User.count).to eq(1)
@@ -56,18 +56,20 @@ describe UsersController do
     end
     
     context "with friend invite" do
+      # failing
       it "creates a Relationship where the inviter follows the friend" do
         darren = Fabricate(:user)
         invitation = Fabricate(:invitation, user_id: darren.id)
         invitation.update_column(:token, '12345')
-        post :create, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" }
+        post :create, { stripeToken: get_stripe_token_id, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" } }
         expect(darren.following_users.last.full_name).to eq("Alice Smith")
       end
+      # failing
       it "creates a Relationship where the friend follows the invitor" do
         darren = Fabricate(:user)
         invitation = Fabricate(:invitation, user_id: darren.id)
         invitation.update_column(:token, '12345')
-        post :create, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" }
+        post :create, { stripeToken: get_stripe_token_id, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" } }
         expect(User.find_by(full_name: "Alice Smith").following_users.last).to eq(darren)
       end
     end
