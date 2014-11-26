@@ -5,6 +5,22 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/email/rspec'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+Capybara.server_port = 52662
+Capybara.register_driver :poltergeist do |app|
+  options = {
+    :js_errors => false,
+    :timeout => 120,
+    :debug => false,
+    :phantomjs_options => ['--load-images=no', '--disk-cache=false', '--ignore-ssl-errors=yes'],
+    :inspector => true
+  }
+  Capybara::Poltergeist::Driver.new(app, options)
+end
+ 
+Capybara.default_wait_time = 30
+
 require 'sidekiq/testing'
 Sidekiq::Testing.inline!
 require 'vcr'
@@ -13,6 +29,7 @@ VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock
   c.configure_rspec_metadata!
+  c.ignore_localhost = true
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -29,6 +46,28 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  
+  config.use_transactional_fixtures = false
+  
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do  
+    DatabaseCleaner.strategy = :truncation  
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
   
   # For VCR configuration
   # so we can use :vcr rather than :vcr => true;
@@ -49,7 +88,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -77,3 +116,14 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
 end
+
+class ActiveRecord::Base
+  mattr_accessor :shared_connection
+  @@shared_connection = nil
+   
+  def self.connection
+    @@shared_connection || retrieve_connection
+  end
+end
+ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+
