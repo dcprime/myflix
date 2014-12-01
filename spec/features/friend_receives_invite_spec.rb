@@ -6,7 +6,7 @@ feature 'friend receives invite' do
     darren = Fabricate(:user)
     invitation = Fabricate(:invitation, user_id: darren.id)
     
-    visit invitation_url(invitation.token)
+    visit invitation_path(invitation.token)
     fill_in "Password", with: "password"
     fill_in "Full Name", with: "Alice Smith"
     fill_in "Credit Card Number", with: "4242424242424242"
