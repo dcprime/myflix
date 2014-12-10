@@ -32,11 +32,10 @@ describe UserSignup do
         UserSignup.new(Fabricate.build(:user, email: "alice@example.com")).sign_up("some_stripe_token")
         expect(ActionMailer::Base.deliveries.last.to).to eq(["alice@example.com"])
       end
-      # Some strange failure - check code for implementing background jobs      
-#       it "sends the email containing the user's name" do
-#         UserSignup.new(Fabricate.build(:user, email: "alice@example.com", full_name: "Alice Smith")).sign_up("some_stripe_token")
-#         expect(ActionMailer::Base.deliveries.last.body).to include("Alice Smith")
-#       end
+      it "sends the email containing the user's name" do
+        UserSignup.new(Fabricate.build(:user, email: "alice@example.com", full_name: "Alice Smith")).sign_up("some_stripe_token")
+        expect(ActionMailer::Base.deliveries.last.body).to include("Alice Smith")
+      end
     end
     
     context "valid personal info and declined card" do
