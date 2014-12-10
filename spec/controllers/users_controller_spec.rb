@@ -10,65 +10,34 @@ describe UsersController do
   end
   
   describe "POST create" do
-    context "email sending" do
-      before { ActionMailer::Base.deliveries.clear }
-      after { ActionMailer::Base.deliveries.clear }
-      
-      it "sends out the email to the user with valid inputs", :vcr do
-        post :create, { stripeToken: get_stripe_token_id, user: { email: "example@example.com", password: "password", full_name: "Dave Conley" } }
-        expect(ActionMailer::Base.deliveries.last.to).to eq(["example@example.com"])
-      end
-      it "sends the email containing the user's name with valid inputs", :vcr do
-        post :create, { stripeToken: get_stripe_token_id, user: { email: "example@example.com", password: "password", full_name: "Dave Conley" } }
-        expect(ActionMailer::Base.deliveries.last).to have_content("Dave Conley")
-      end
-      it "does not send the email with invalid inputs" do 
-        post :create, user: { email: "example@example.com", full_name: "Dave Conley" }
-        expect(ActionMailer::Base.deliveries).to be_empty
-      end
-    end
     
-    context "with valid input", :vcr do
-      before do
-        post :create, { stripeToken: get_stripe_token_id, user: { email: "example@example.com", password: "password", full_name: "Dave Conley" } }
-      end
-      it "creates the user" do
-        expect(User.count).to eq(1)
-      end
+    context "successful user sign up" do
       it "redirects to sign in page" do
+        result = double(:sign_up_result, successful?: true)
+        UserSignup.any_instance.should_receive(:sign_up).and_return(result)
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to sign_in_path
       end
     end
     
-    context "with invalid input" do
+    context "failed user sign up" do
+      let(:charge) { double(:charge, successful?: false, error_message: 'message') }
       before do
-        post :create, user: {email: "dcprime@gmail.com", password: "password"}
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user)
       end
-      it "does not create the user" do
-        expect(User.count).to eq(0)
-      end
-      it "renders the :new template" do
+      it "renders the new template" do
         expect(response).to render_template :new
       end
-      it "sets @user" do
-        expect(assigns(:user)).to be_instance_of(User)
+      it "sets the flash error message" do
+        expect(flash[:error]).to be_present
       end
     end
     
-    context "with friend invite" do
-      it "creates a Relationship where the inviter follows the friend", :vcr do
-        darren = Fabricate(:user)
-        invitation = Fabricate(:invitation, user_id: darren.id)
-        invitation.update_column(:token, '12345')
-        post :create, { stripeToken: get_stripe_token_id, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" } }
-        expect(darren.following_users.last.full_name).to eq("Alice Smith")
-      end
-      it "creates a Relationship where the friend follows the invitor", :vcr do
-        darren = Fabricate(:user)
-        invitation = Fabricate(:invitation, user_id: darren.id)
-        invitation.update_column(:token, '12345')
-        post :create, { stripeToken: get_stripe_token_id, user: { email: invitation.friend_email, password: "password", full_name: "Alice Smith" } }
-        expect(User.find_by(full_name: "Alice Smith").following_users.last).to eq(darren)
+    context "with invalid personal info" do
+      it "renders the :new template" do
+        post :create, user: {email: "dcprime@gmail.com", password: "password"}
+        expect(response).to render_template :new
       end
     end
   end

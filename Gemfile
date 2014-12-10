@@ -22,6 +22,7 @@ gem 'carrierwave'
 gem 'fog'
 gem "mini_magick"
 gem 'stripe'
+gem 'draper', '~> 1.3'
 
 group :development do
   gem 'sqlite3'

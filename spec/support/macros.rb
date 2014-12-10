@@ -48,3 +48,16 @@ def get_stripe_token_id
   )
   @token.id
 end
+
+def get_invalid_stripe_token_id
+  Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
+  @token ||= Stripe::Token.create(
+    :card => {
+    :number => "4000000000000002",
+    :exp_month => 11,
+    :exp_year => 2016,
+    :cvc => "123"
+    }
+  )
+  @token.id
+end

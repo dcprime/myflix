@@ -31,11 +31,13 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 24 Nov 2014 20:05:32 GMT
+      - Wed, 10 Dec 2014 18:07:54 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '624'
+      Connection:
+      - keep-alive
       Access-Control-Allow-Credentials:
       - 'true'
       Access-Control-Allow-Methods:
@@ -45,7 +47,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - 3a7fa8e3-ab5b-4de6-82fa-256461900bd9
+      - req_3ekyWPOhotPJcA4U
       Stripe-Version:
       - '2014-11-05'
       Strict-Transport-Security:
@@ -54,14 +56,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_152T5UBUofbCWxo18qu7wMmR",
+          "id": "tok_158EsQBUofbCWxo1BzN9Xk4c",
           "livemode": false,
-          "created": 1416859532,
+          "created": 1418234874,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_152T5UBUofbCWxo1tN1JzFgX",
+            "id": "card_158EsQBUofbCWxo1du1KmSIs",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -82,13 +84,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Mon, 24 Nov 2014 20:05:32 GMT
+  recorded_at: Wed, 10 Dec 2014 18:07:55 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=300&currency=usd&card=tok_152T5UBUofbCWxo18qu7wMmR
+      string: amount=300&currency=usd&card=tok_158EsQBUofbCWxo1BzN9Xk4c
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -114,11 +116,13 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 24 Nov 2014 20:05:32 GMT
+      - Wed, 10 Dec 2014 18:07:55 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '1358'
+      - '1295'
+      Connection:
+      - keep-alive
       Access-Control-Allow-Credentials:
       - 'true'
       Access-Control-Allow-Methods:
@@ -128,7 +132,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - f633d8c0-0ca5-4321-b7d2-fd421a5fff7a
+      - req_8YL4s9xeMqkElfiN
       Stripe-Version:
       - '2014-11-05'
       Strict-Transport-Security:
@@ -137,9 +141,9 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_152T5UBUofbCWxo1ZxQRnOTm",
+          "id": "ch_158EsRBUofbCWxo1opzlv7Y8",
           "object": "charge",
-          "created": 1416859532,
+          "created": 1418234875,
           "livemode": false,
           "paid": true,
           "amount": 300,
@@ -150,11 +154,11 @@ http_interactions:
             "object": "list",
             "total_count": 0,
             "has_more": false,
-            "url": "/v1/charges/ch_152T5UBUofbCWxo1ZxQRnOTm/refunds",
+            "url": "/v1/charges/ch_158EsRBUofbCWxo1opzlv7Y8/refunds",
             "data": []
           },
           "card": {
-            "id": "card_152T5UBUofbCWxo1tN1JzFgX",
+            "id": "card_158EsQBUofbCWxo1du1KmSIs",
             "object": "card",
             "last4": "4242",
             "brand": "Visa",
@@ -176,7 +180,7 @@ http_interactions:
             "dynamic_last4": null,
             "customer": null
           },
-          "balance_transaction": "txn_152T5UBUofbCWxo1oZFv4MHq",
+          "balance_transaction": "txn_158EsRBUofbCWxo1XLe3TT4i",
           "failure_message": null,
           "failure_code": null,
           "amount_refunded": 0,
@@ -186,14 +190,11 @@ http_interactions:
           "dispute": null,
           "metadata": {},
           "statement_description": null,
-          "fraud_details": {
-            "stripe_report": "unavailable",
-            "user_report": null
-          },
+          "fraud_details": {},
           "receipt_email": null,
           "receipt_number": null,
           "shipping": null
         }
     http_version: 
-  recorded_at: Mon, 24 Nov 2014 20:05:33 GMT
+  recorded_at: Wed, 10 Dec 2014 18:07:55 GMT
 recorded_with: VCR 2.9.3
