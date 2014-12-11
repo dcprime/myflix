@@ -34,7 +34,7 @@ describe UserSignup do
       end
       it "sends the email containing the user's name" do
         UserSignup.new(Fabricate.build(:user, email: "alice@example.com", full_name: "Alice Smith")).sign_up("some_stripe_token")
-        expect(ActionMailer::Base.deliveries.last.body).to include("Alice Smith")
+        expect(ActionMailer::Base.deliveries.last.body.encoded).to include("Alice Smith")
       end
     end
     
