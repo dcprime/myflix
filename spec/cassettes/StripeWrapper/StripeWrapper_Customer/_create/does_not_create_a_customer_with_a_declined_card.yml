@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 10 Dec 2014 18:07:57 GMT
+      - Mon, 22 Dec 2014 19:29:05 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -47,7 +47,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_3ptSfXQswDWGaDiO
+      - req_a7ndGFnAqzgbEw2M
       Stripe-Version:
       - '2014-11-05'
       Strict-Transport-Security:
@@ -56,14 +56,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_158EsTBUofbCWxo13avBFcuy",
+          "id": "tok_15CbrZBUofbCWxo1aleLqOft",
           "livemode": false,
-          "created": 1418234877,
+          "created": 1419276545,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_158EsTBUofbCWxo188YPZhOA",
+            "id": "card_15CbrZBUofbCWxo1qFuzJ0l2",
             "object": "card",
             "last4": "0002",
             "brand": "Visa",
@@ -84,13 +84,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Wed, 10 Dec 2014 18:07:57 GMT
+  recorded_at: Mon, 22 Dec 2014 19:29:06 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=300&currency=usd&card=tok_158EsTBUofbCWxo13avBFcuy
+      string: card=tok_15CbrZBUofbCWxo1aleLqOft&plan=base&email=alisa%40white.com
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -107,7 +107,7 @@ http_interactions:
         tealeaf-rails1-132653 3.13.4 #1 SMP Thu Mar 6 03:42:38 UTC 2014 x86_64 x86_64
         x86_64 GNU/Linux"}'
       Content-Length:
-      - '57'
+      - '67'
   response:
     status:
       code: 402
@@ -116,11 +116,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 10 Dec 2014 18:07:58 GMT
+      - Mon, 22 Dec 2014 19:29:06 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '162'
+      - '117'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -132,7 +132,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_zHTkPydInw1Jrpk1
+      - req_ER8SvlLmFPBmdeg1
       Stripe-Version:
       - '2014-11-05'
     body:
@@ -142,10 +142,9 @@ http_interactions:
           "error": {
             "message": "Your card was declined.",
             "type": "card_error",
-            "code": "card_declined",
-            "charge": "ch_158EsUBUofbCWxo1oeUzLTZq"
+            "code": "card_declined"
           }
         }
     http_version: 
-  recorded_at: Wed, 10 Dec 2014 18:07:58 GMT
+  recorded_at: Mon, 22 Dec 2014 19:29:06 GMT
 recorded_with: VCR 2.9.3

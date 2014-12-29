@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 10 Dec 2014 18:07:56 GMT
+      - Mon, 15 Dec 2014 19:53:58 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -47,7 +47,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_tEUEkTuTezUBKvHj
+      - req_L5UILxsTTdlhqK5e
       Stripe-Version:
       - '2014-11-05'
       Strict-Transport-Security:
@@ -56,14 +56,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_158EsSBUofbCWxo1Mdroq5n4",
+          "id": "tok_15A4uoBUofbCWxo1MmUbu43h",
           "livemode": false,
-          "created": 1418234876,
+          "created": 1418673238,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_158EsSBUofbCWxo1SmGNIP7V",
+            "id": "card_15A4uoBUofbCWxo1cWsMgLyN",
             "object": "card",
             "last4": "0002",
             "brand": "Visa",
@@ -84,13 +84,13 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Wed, 10 Dec 2014 18:07:56 GMT
+  recorded_at: Mon, 15 Dec 2014 19:53:58 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=300&currency=usd&card=tok_158EsSBUofbCWxo1Mdroq5n4
+      string: amount=300&currency=usd&card=tok_15A4uoBUofbCWxo1MmUbu43h
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -116,7 +116,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 10 Dec 2014 18:07:56 GMT
+      - Mon, 15 Dec 2014 19:53:58 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
@@ -132,7 +132,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_ZZhec2pRvDLaVWtr
+      - req_C0Srwvb5OMMoc0ne
       Stripe-Version:
       - '2014-11-05'
     body:
@@ -143,9 +143,9 @@ http_interactions:
             "message": "Your card was declined.",
             "type": "card_error",
             "code": "card_declined",
-            "charge": "ch_158EsSBUofbCWxo1fVTOEf3C"
+            "charge": "ch_15A4uoBUofbCWxo1ZasFL4rV"
           }
         }
     http_version: 
-  recorded_at: Wed, 10 Dec 2014 18:07:57 GMT
+  recorded_at: Mon, 15 Dec 2014 19:53:58 GMT
 recorded_with: VCR 2.9.3
