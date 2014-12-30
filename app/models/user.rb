@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
     queue_items.map(&:video).include?(video)
   end
   
+  def deactivate!
+    update_column(:active, false)
+  end
+  
 end

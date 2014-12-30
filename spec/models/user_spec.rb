@@ -30,4 +30,13 @@ describe User do
       expect(user.queued_video?(video)).to be_falsey
     end
   end
+  
+  describe "#deactivate!" do
+    it "deactivates an active user" do
+      darren = Fabricate(:user, active: true)
+      darren.deactivate!
+      expect(darren).not_to be_active
+    end
+  end
+  
 end
